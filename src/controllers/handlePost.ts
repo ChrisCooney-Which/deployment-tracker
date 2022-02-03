@@ -2,8 +2,6 @@ import type { Knex } from "knex";
 
 export const handlePost = async (knex: Knex, data: Data) => {
   const { project_name, deployment_id } = data;
-  console.log("data", data);
-  console.log("knex", knex);
 
   try {
     const id = await returnSquadId(knex, project_name);
@@ -12,9 +10,9 @@ export const handlePost = async (knex: Knex, data: Data) => {
       return false;
     }
 
-    await knex("linked_test").insert({
-      name: deployment_id,
-      team_id: id,
+    await knex("deployments").insert({
+      deployment_id,
+      squad_id: id,
     });
 
     return true;
@@ -33,9 +31,9 @@ type Data = {
 
 const returnSquadId = async (
   knex: Knex,
-  projectName: string
+  squadName: string
 ): Promise<string> => {
-  const squadData = await knex("test").where("name", projectName).select("id");
+  const squadData = await knex("squads").where("name", squadName).select("id");
 
   if (!squadData.length) {
     return "";

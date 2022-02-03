@@ -6,17 +6,23 @@ const { handlePost } = require("./controllers/handlePost");
 const app = express();
 app.use(express.json());
 
-app.post("/", async (req, res) => {
+app.post("/deployment", async (req, res, next) => {
   const { attributes } = req.body.data;
+
+  if (!attributes) {
+    res.status(400);
+    res.json("Error Data was not supplied in the correct format");
+    return;
+  }
 
   const wasPostSuccessful = await handlePost(knex, attributes);
 
   if (wasPostSuccessful) {
     res.json("Deployment logged");
-  } else {
-    res.status(400);
-    res.json("Error Data was not logged");
+    return;
   }
+  res.status(400);
+  res.json("Error Data was not logged");
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
