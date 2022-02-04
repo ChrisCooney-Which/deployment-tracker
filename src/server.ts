@@ -6,7 +6,7 @@ const { handlePost } = require("./controllers/handlePost");
 const app = express();
 app.use(express.json());
 
-app.post("/deployment", async (req, res, next) => {
+app.post("/deployment", async (req, res) => {
   const { attributes } = req.body.data;
 
   if (!attributes) {
