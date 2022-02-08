@@ -1,9 +1,9 @@
-require("dotenv").config();
+require('dotenv').config()
 
 const config = {
   PORT: process.env.PORT || 8000,
   DATABASE_CONFIG: {
-    client: "pg",
+    client: 'pg',
     connection: {
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
@@ -11,6 +11,6 @@ const config = {
       database: process.env.DB_NAME,
     },
   },
-};
+}
 
-module.exports = config;
+module.exports = config
