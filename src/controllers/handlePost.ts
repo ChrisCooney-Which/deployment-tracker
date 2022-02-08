@@ -1,14 +1,14 @@
 import type { Knex } from 'knex'
-import { getSquadId } from '../utils/getSquadId'
+import { getSquadId, createResponse } from '../utils'
 
 export const handlePost = async (knex: Knex, data: Data) => {
-  const { project_name, deployment_id } = data
+  const { squad_name, deployment_id } = data
 
   try {
-    const id = await getSquadId(knex, project_name)
+    const id = await getSquadId(knex, squad_name)
 
     if (!id) {
-      return { error: `No id found for project name: ${project_name}` }
+      return { error: `No id found for project name: ${squad_name}` }
     }
 
     const data = await knex('deployments').insert(
@@ -19,14 +19,18 @@ export const handlePost = async (knex: Knex, data: Data) => {
       ['deployment_id', 'squad_id']
     )
 
-    return data[0]
+    return createResponse({
+      action: 'insert',
+      data: data[0],
+      squadName: squad_name,
+    })
   } catch (err) {
     console.log('error whilst inserting data: ', err)
 
     return {
       error: 'Could not add data, check server logs',
       deployment_id,
-      project_name,
+      squad_name,
     }
   }
 }
@@ -34,6 +38,6 @@ export const handlePost = async (knex: Knex, data: Data) => {
 ///////// IMPLEMENTATION /////////
 
 type Data = {
-  project_name: string
+  squad_name: string
   deployment_id: string
 }
