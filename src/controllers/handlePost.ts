@@ -1,5 +1,6 @@
 import type { Knex } from 'knex'
 import { getSquadId, createResponse } from '../utils'
+import type { Data } from '../types'
 
 export const handlePost = async (knex: Knex, data: Data) => {
   const { squad_name, deployment_id } = data
@@ -33,11 +34,4 @@ export const handlePost = async (knex: Knex, data: Data) => {
       squad_name,
     }
   }
-}
-
-///////// IMPLEMENTATION /////////
-
-type Data = {
-  squad_name: string
-  deployment_id: string
 }

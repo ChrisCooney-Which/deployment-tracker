@@ -1,9 +1,9 @@
 import type { Knex } from 'knex'
 import { getSquadId, createResponse } from '../utils'
-import type { Data as BaseData } from '../types'
+import type { Data } from '../types'
 
-export const handleUpdate = async (knex: Knex, data: Data) => {
-  const { squad_name, deployment_id, updated_deployment_id } = data
+export const handleDelete = async (knex: Knex, data: Data) => {
+  const { squad_name, deployment_id } = data
 
   try {
     const id = await getSquadId(knex, squad_name)
@@ -17,13 +17,10 @@ export const handleUpdate = async (knex: Knex, data: Data) => {
         deployment_id,
         squad_id: id,
       })
-      .update({ deployment_id: updated_deployment_id }, [
-        'deployment_id',
-        'squad_id',
-      ])
+      .delete(['deployment_id', 'squad_id'])
 
     return createResponse({
-      action: 'update',
+      action: 'delete',
       data: data[0],
       squadName: squad_name,
     })
@@ -31,13 +28,9 @@ export const handleUpdate = async (knex: Knex, data: Data) => {
     console.log('error whilst inserting data: ', err)
 
     return {
-      error: 'Could not update data, check server logs',
+      error: 'Could not delete data, check server logs',
       deployment_id,
       squad_name,
     }
   }
 }
-
-///////// IMPLEMENTATION /////////
-
-type Data = BaseData & { updated_deployment_id: string }
