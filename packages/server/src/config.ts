@@ -1,7 +1,4 @@
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') })
-
-console.log('process', process.env)
+require('dotenv').config({ path: require('find-config')('.env') })
 
 export const config = {
   PORT: process.env.PORT || 8000,
