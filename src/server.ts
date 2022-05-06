@@ -1,8 +1,9 @@
-const express = require('express')
-const { PORT, DATABASE_CONFIG } = require('./config')
-const knex = require('knex')(DATABASE_CONFIG)
-const { handlePost, handleUpdate, handleDelete } = require('./controllers')
-const { handleRequest } = require('./utils')
+import express from 'express'
+import { config } from './config'
+import { handlePost, handleUpdate, handleDelete } from './controllers'
+import { handleRequest } from './utils'
+
+const knex = require('knex')(config.DATABASE_CONFIG)
 
 const app = express()
 app.use(express.json())
@@ -14,8 +15,6 @@ app.post('/deployment', async (req, res) => {
     handlerFunction: handlePost,
     response: res,
   })
-
-  return
 })
 
 app.patch('/update', async (req, res) => {
@@ -25,8 +24,6 @@ app.patch('/update', async (req, res) => {
     handlerFunction: handleUpdate,
     response: res,
   })
-
-  return
 })
 
 app.delete('/delete', async (req, res) => {
@@ -36,8 +33,6 @@ app.delete('/delete', async (req, res) => {
     handlerFunction: handleDelete,
     response: res,
   })
-
-  return
 })
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+app.listen(config.PORT, () => console.log(`Listening on port ${config.PORT}`))

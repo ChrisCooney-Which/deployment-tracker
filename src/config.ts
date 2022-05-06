@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const config = {
+export const config = {
   PORT: process.env.PORT || 8000,
   DATABASE_CONFIG: {
     client: 'pg',
@@ -12,5 +12,3 @@ const config = {
     },
   },
 }
-
-module.exports = config
