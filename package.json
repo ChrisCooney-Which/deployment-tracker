@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "bootstrap": "lerna bootstrap"
+  },
   "dependencies": {
     "lerna": "^4.0.0"
-  }
+  },
+  "name": "deployment-tracker"
 }
