@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "nodemon ./src/server.ts",
     "test": "jest",
-    "test:dev": "yarn test --coverage=false"
+    "test:dev": "yarn test --coverage=false",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run"
   },
   "dependencies": {
     "express": "^4.17.2",
